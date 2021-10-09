@@ -1,15 +1,32 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <nav>
+    <navigation></navigation>
+  </nav>
+  <main>
+    <div class="claendar-wrapper">
+      <h1>Планирование</h1>
+      <calendar></calendar>
+    </div>
+    <div class="employee">
+      <employee-list></employee-list>
+      <employee-details></employee-details>
+    </div>
+  </main>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Navigation from './components/Navigation.vue'
+import Calendar from './components/Calendar.vue'
+import EmployeeList from './components/EmployeeList.vue'
+import EmployeeDetails from './components/EmployeeDetails.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Navigation,
+    Calendar,
+    EmployeeList,
+    EmployeeDetails
   }
 }
 </script>
