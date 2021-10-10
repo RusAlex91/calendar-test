@@ -1,14 +1,45 @@
 <template>
-  <div class="day">
-    <span class="day_number">1</span>
-    <span class="day__trip-name">Екатеринбург</span>
-    <span>Выходной</span>
-    <span>Праздник</span>
+  <div class="day" :class="{ today: currentDay }">
+    <span class="day_number">{{ index }}</span>
+
+    <!-- <span v-if="trip" class="day__trip-name">Екатеринбург</span>
+    <span v-if="weekend">Выходной</span>
+    <span v-if="selebration">Праздник</span> -->
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    index: {
+      type: Number,
+      required: true,
+      default: null
+    },
+    day: {
+      type: Number,
+      required: false,
+      default: null
+    }
+  },
+  data () {
+    return {
+      currentDay: null
+    }
+  },
+  methods: {
+    isWeekend () {}
+  },
+  mounted () {
+    if (this.day === this.index) {
+      this.currentDay = true
+    } else {
+      this.currentDay = false
+    }
+    this.isWeekend()
+    console.log(this.index)
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -24,5 +55,8 @@ export default {}
 
   &__trip-name {
   }
+}
+.today {
+  background: rgba(255, 99, 71, 0.295);
 }
 </style>
