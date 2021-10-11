@@ -1,16 +1,21 @@
 <template>
   <div class="day" :class="{ today: currentDay, weekend: todayWeekend }">
     <span class="day_number">{{ index }}</span>
+
     <span
-      v-if="trip && !todayWeekend"
+      v-if="todayTrip && !todayWeekend"
       :class="{ tripBadge: trip }"
       class="day__trip-name"
       >Екатеринбург</span
     >
-    <span v-if="todayWeekend" :class="{ weekendBadge: todayWeekend }"
+    <span
+      v-if="todayWeekend && !todayHoliday"
+      :class="{ weekendBadge: todayWeekend }"
       >Выходной</span
     >
-    <span v-if="holidays">Праздник</span>
+    <span v-if="todayHoliday" :class="{ holidayBadge: todayHoliday }"
+      >Праздник</span
+    >
   </div>
 </template>
 
@@ -32,23 +37,47 @@ export default {
       required: false,
       default: Array
     },
+
+    holiday: {
+      type: Array,
+      required: false,
+      default: Array
+    },
     trip: {
-      type: Boolean,
-      default: true
+      type: Array,
+      default: Array
     }
   },
   data () {
     return {
       currentDay: null,
       weekends: this.weekend,
-      todayWeekend: false
+      todayWeekend: false,
+      todayHoliday: false,
+      todayTrip: false
     }
   },
   methods: {
     isWeekend () {
-      this.weekends.forEach(el => {
+      this.weekend.forEach(el => {
         if (el === this.index) {
           this.todayWeekend = true
+        }
+      })
+    },
+    isHoliday () {
+      this.holiday.forEach(el => {
+        if (el === this.index) {
+          debugger
+          this.todayHoliday = true
+        }
+      })
+    },
+    isTrip () {
+      this.trip.forEach(el => {
+        if (el === this.index) {
+          debugger
+          this.todayTrip = true
         }
       })
     }
@@ -59,10 +88,17 @@ export default {
     } else {
       this.currentDay = false
     }
-    this.weekends = this.weekend
-    this.isWeekend()
+    console.log('mounted')
   },
-  created () {}
+  beforeUpdate () {
+    this.todayWeekend = false
+    this.currentDay = null
+    this.todayHoliday = false
+    this.todayTrip = false
+    this.isWeekend()
+    this.isHoliday()
+    this.isTrip()
+  }
 }
 </script>
 
@@ -121,6 +157,21 @@ export default {
   line-height: 2rem;
   padding-left: 1rem;
   padding-right: 1rem;
+  background: #97b2c4;
+  border-radius: 5px;
+}
+
+.holidayBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  font-size: 14px;
+  font-weight: 400;
+  width: 7.2rem;
+  height: 2.3rem;
   background: #97b2c4;
   border-radius: 5px;
 }

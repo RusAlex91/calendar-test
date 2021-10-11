@@ -2,6 +2,7 @@
   <div class="calendar">
     <div class="calendar__navigation">
       <h2 ref="date" class="calendar__month-year">Июнь 2021</h2>
+      {{ this.holidays }}
       <div class="calendar-controls">
         <button
           @click="updateCalendar('descrease')"
@@ -40,6 +41,8 @@
           :index="index"
           :day="this.currentDay"
           :weekend="this.weekends"
+          :holiday="this.holidays"
+          :trip="this.trips"
         ></calendar-day>
         <calendar-day
           v-for="index in nextDates"
@@ -64,15 +67,23 @@ export default {
       prevDates: [],
       nextDates: [],
       currentDay: null,
-      weekends: []
+      weekends: [],
+      holidays: [],
+      trips: []
     }
   },
   methods: {
     updateCalendar (value) {
       if (value === 'descrease') {
         this.date.setMonth(this.date.getMonth() - 1)
+        this.weekends = []
+        this.holidays = []
+        this.trips = []
       } else if (value === 'increase') {
         this.date.setMonth(this.date.getMonth() + 1)
+        this.weekends = []
+        this.holidays = []
+        this.trips = []
       }
       this.createCalendar()
     },
@@ -134,8 +145,8 @@ export default {
       }
       this.currentDay = new Date().getDate()
 
-      const month = new Date().getMonth() + 1
-      var current = new Date(new Date().getFullYear(), month - 1, 1)
+      const month = this.date.getMonth() + 1
+      var current = new Date(this.date.getFullYear(), month - 1, 1)
 
       // as long as our date is in the requested month
       while (current.getMonth() === month - 1) {
@@ -147,11 +158,66 @@ export default {
         // move to next day
         current.setDate(current.getDate() + 1)
       }
+
+      const daysArr = [...Array(this.daysInMonth).keys()]
+      for (let currentDay = 0; currentDay < daysArr.length; currentDay++) {
+        let today = this.date
+        const dd = daysArr[currentDay]
+        const mm = month
+        const yyyy = today.getFullYear()
+
+        today = dd + '.' + mm + '.' + yyyy
+
+        const arr = [
+          '11.10.2021',
+          '2.1.2021',
+          '3.1.2021',
+          '4.1.2021',
+          '5.1.2021',
+          '6.1.2021',
+          '7.1.2021',
+          '8.1.2021',
+          '23.2.2021',
+          '8.3.2021',
+          '1.5.2021',
+          '9.5.2021',
+          '12.6.2021',
+          '4.11.2021'
+        ]
+        arr.forEach(el => {
+          if (today === el) {
+            this.holidays.push(dd)
+          }
+        })
+      }
+
+      for (let currentDay = 0; currentDay < daysArr.length; currentDay++) {
+        let today = this.date
+        const dd = daysArr[currentDay]
+        const mm = month
+        const yyyy = today.getFullYear()
+
+        today = dd + '.' + mm + '.' + yyyy
+
+        const arr = [
+          '14.10.2021',
+          '15.10.2021',
+          '16.10.2021',
+          '17.10.2021',
+          '18.10.2021'
+        ]
+        arr.forEach(el => {
+          if (today === el) {
+            this.trips.push(dd)
+          }
+        })
+      }
     }
   },
   mounted () {
     this.createCalendar()
-  }
+  },
+  afterMounted () {}
 }
 </script>
 
