@@ -1,16 +1,17 @@
 <template>
   <div class="employees-list">
     <h3 class="employees-list__title">Сотрудник</h3>
-    <select name="" id="em-list">
-      <option value="Алексей Лечащий">Алексей Лечащий</option>
-      <option value="Алексей Лечащий 2">Алексей Лечащий 2</option>
-      <option value="Алексей Лечащий 3">Алексей Лечащий 3</option>
-    </select>
+    <employee-select> </employee-select>
   </div>
 </template>
 
 <script>
-export default {}
+import EmployeeSelect from './EmployeeSelect.vue'
+export default {
+  components: {
+    EmployeeSelect
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -28,11 +29,5 @@ export default {}
     line-height: 2.2rem;
     margin: 3rem 3rem 1rem;
   }
-}
-
-#em-list {
-  margin: auto;
-  height: 4rem;
-  width: 38rem;
 }
 </style>

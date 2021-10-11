@@ -39,6 +39,7 @@
           :key="index"
           :index="index"
           :day="this.currentDay"
+          :weekend="this.weekends"
         ></calendar-day>
         <calendar-day
           v-for="index in nextDates"
@@ -62,7 +63,8 @@ export default {
       daysInMonth: null,
       prevDates: [],
       nextDates: [],
-      currentDay: null
+      currentDay: null,
+      weekends: []
     }
   },
   methods: {
@@ -74,7 +76,7 @@ export default {
       }
       this.createCalendar()
     },
-    createCalendar (month) {
+    createCalendar () {
       const date = this.date
 
       date.setDate(1)
@@ -85,10 +87,6 @@ export default {
         date.getMonth() + 1,
         0
       ).getDate()
-
-      console.log(
-        new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay() + '!!!!'
-      )
 
       const prevLastDay = new Date(
         date.getFullYear(),
@@ -122,7 +120,7 @@ export default {
 
       this.prevDates = []
       const firstDayIndex = date.getDay() - 1
-      console.log(firstDayIndex)
+
       for (let x = firstDayIndex; x > 0; x--) {
         const temp = prevLastDay - x + 1
         this.prevDates.push(temp)
@@ -136,10 +134,18 @@ export default {
       }
       this.currentDay = new Date().getDate()
 
-      var dt = new Date()
+      const month = new Date().getMonth() + 1
+      var current = new Date(new Date().getFullYear(), month - 1, 1)
 
-      if (dt.getDay() === 6 || dt.getDay() === 0) {
-        console.log('weekend')
+      // as long as our date is in the requested month
+      while (current.getMonth() === month - 1) {
+        // saturday or sunday?
+        if (current.getDay() === 0 || current.getDay() === 6) {
+          this.weekends.push(current.getDate())
+        }
+
+        // move to next day
+        current.setDate(current.getDate() + 1)
       }
     }
   },

@@ -2,6 +2,8 @@
   <div class="day" :class="{ today: currentDay }">
     <span class="day_number">{{ index }}</span>
 
+    {{ todayWeekend }}
+
     <!-- <span v-if="trip" class="day__trip-name">Екатеринбург</span>
     <span v-if="weekend">Выходной</span>
     <span v-if="selebration">Праздник</span> -->
@@ -20,15 +22,28 @@ export default {
       type: Number,
       required: false,
       default: null
+    },
+    weekend: {
+      type: Array,
+      required: false,
+      default: Array
     }
   },
   data () {
     return {
-      currentDay: null
+      currentDay: null,
+      weekends: this.weekend,
+      todayWeekend: false
     }
   },
   methods: {
-    isWeekend () {}
+    isWeekend () {
+      this.weekends.forEach(el => {
+        if (el === this.index) {
+          this.todayWeekend = true
+        }
+      })
+    }
   },
   mounted () {
     if (this.day === this.index) {
@@ -36,9 +51,10 @@ export default {
     } else {
       this.currentDay = false
     }
+    this.weekends = this.weekend
     this.isWeekend()
-    console.log(this.index)
-  }
+  },
+  created () {}
 }
 </script>
 
