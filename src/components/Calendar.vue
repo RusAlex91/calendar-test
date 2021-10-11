@@ -232,6 +232,9 @@ export default {
   display: grid;
   grid-template-columns: repeat(7, 0fr);
   border: 1px solid #e9e9e9;
+  // well, this is bad... sorry for that, i just cant make it right
+  height: 47rem;
+  overflow: hidden;
   &__prev-date {
   }
 

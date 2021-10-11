@@ -87,6 +87,13 @@ main {
   display: flex;
 }
 
+.claendar-wrapper {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 3rem;
+}
+
 h1 {
   font-size: 7.2rem;
   line-height: 8.64rem;
