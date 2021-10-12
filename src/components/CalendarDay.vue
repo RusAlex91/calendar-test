@@ -68,7 +68,6 @@ export default {
     isHoliday () {
       this.holiday.forEach(el => {
         if (el === this.index) {
-          debugger
           this.todayHoliday = true
         }
       })
@@ -76,7 +75,6 @@ export default {
     isTrip () {
       this.trip.forEach(el => {
         if (el === this.index) {
-          debugger
           this.todayTrip = true
         }
       })

@@ -29,6 +29,30 @@ export default {
     Calendar,
     EmployeeList,
     EmployeeDetails
+  },
+  data () {
+    return {
+      employeeData: null,
+      holidaysData: null
+    }
+  },
+  methods: {
+    fetchEmployee () {
+      fetch(
+        'https://my-json-server.typicode.com/RusAlex91/calendar-test/employees',
+        {}
+      )
+        .then(response => response.json())
+        .then(data => (this.employeeData = data))
+    }
+  },
+  created () {
+    fetch(
+      'https://my-json-server.typicode.com/RusAlex91/calendar-test/holidays',
+      {}
+    )
+      .then(response => response.json())
+      .then(data => (this.holidaysData = data))
   }
 }
 </script>
