@@ -6,11 +6,17 @@
     <main>
       <div class="claendar-wrapper">
         <h1>Планирование</h1>
-        <calendar></calendar>
+        <calendar :tripsData="trips" :holidaysData="holidaysData"></calendar>
       </div>
       <div class="employee">
-        <employee-list></employee-list>
-        <employee-details></employee-details>
+        <employee-list
+          @trips="getTripData"
+          :employeeData="employeeData"
+        ></employee-list>
+        <employee-details
+          :tripsDays="tripsDays"
+          :tripsCounter="tripsCounter"
+        ></employee-details>
       </div>
     </main>
   </div>
@@ -33,17 +39,21 @@ export default {
   data () {
     return {
       employeeData: null,
-      holidaysData: null
+      holidaysData: null,
+      trips: null,
+      tripsDays: null,
+      tripsCounter: null
     }
   },
   methods: {
-    fetchEmployee () {
-      fetch(
-        'https://my-json-server.typicode.com/RusAlex91/calendar-test/employees',
-        {}
-      )
-        .then(response => response.json())
-        .then(data => (this.employeeData = data))
+    getTripData (data) {
+      this.trips = data
+
+      this.tripsCounter = Object.keys(this.trips).length
+      this.tripsDays = null
+      Object.entries(this.trips).forEach(([key, value]) => {
+        this.tripsDays += value.length
+      })
     }
   },
   created () {
@@ -53,7 +63,16 @@ export default {
     )
       .then(response => response.json())
       .then(data => (this.holidaysData = data))
-  }
+  },
+  mounted () {
+    fetch(
+      'https://my-json-server.typicode.com/RusAlex91/calendar-test/employees',
+      {}
+    )
+      .then(response => response.json())
+      .then(data => (this.employeeData = data))
+  },
+  updated () {}
 }
 </script>
 
