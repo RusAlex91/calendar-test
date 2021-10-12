@@ -80,20 +80,6 @@ export default {
     }
   },
   methods: {
-    isWeekend () {
-      // this.weekend.forEach(el => {
-      //   if (el === this.index) {
-      //     this.todayWeekend = true
-      //   }
-      // })
-    },
-    isHoliday () {
-      // this.holiday.forEach(el => {
-      //   if (el === this.index) {
-      //     this.todayHoliday = true
-      //   }
-      // })
-    },
     getColors () {
       fetch(
         'https://my-json-server.typicode.com/RusAlex91/calendar-test/locationColors'
@@ -119,12 +105,7 @@ export default {
     console.log('mounted')
   },
   beforeUpdate () {
-    this.todayWeekend = false
-    this.currentDay = null
-    this.todayHoliday = false
-    this.todayTrip = false
-    this.isWeekend()
-    this.isHoliday()
+    this.currentDay = false
   },
   updated () {}
 }
@@ -146,9 +127,6 @@ export default {
   }
 
   /* .day__trip-name */
-
-  &__trip-name {
-  }
 }
 .today {
   background: rgba(255, 99, 71, 0.295);

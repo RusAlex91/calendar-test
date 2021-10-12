@@ -63,6 +63,8 @@ export default {
       type: Array,
       required: false,
       default: () => [
+        '16.10.2021',
+        '5.10.2021',
         '1.1.2021',
         '2.1.2021',
         '3.1.2021',
@@ -110,10 +112,7 @@ export default {
         this.nextDates = []
         this.currentDay = null
         this.weekends = []
-
         this.trips = []
-        this.tripData = {}
-
         this.tripArr = []
         this.day = {}
       } else if (value === 'increase') {
@@ -123,10 +122,7 @@ export default {
         this.nextDates = []
         this.currentDay = null
         this.weekends = []
-
         this.trips = []
-        this.tripData = {}
-
         this.tripArr = []
         this.day = {}
       }
@@ -176,25 +172,18 @@ export default {
 
       this.prevDates = []
       const firstDayIndex = date.getDay() - 1
-      // const firstDaysObj = {}
 
       for (let x = firstDayIndex; x > 0; x--) {
-        // firstDaysObj[x] = {}
-
         const temp = prevLastDay - x + 1
-
-        // firstDaysObj[x].day = temp
-
         this.prevDates.push(temp)
       }
-      // this.prevDates = firstDaysObj
-
       this.nextDates = []
       const nextDays = 7 - lastDayIndex
       for (let o = 1; o <= nextDays; o++) {
         const temp = o
         this.nextDates.push(temp)
       }
+      // Сегоднящний день, для отображения на календаре (не доделано)
       this.currentDay = new Date().getDate()
 
       const month = this.date.getMonth() + 1
@@ -347,26 +336,14 @@ export default {
   // well, this is bad... sorry for that, i just cant make it right
   height: 47rem;
   overflow: hidden;
-  &__prev-date {
-  }
 
   /* .calendar-days__next-date */
 
-  &__next-date {
-  }
   div {
     width: 12.74rem;
     height: 9.2rem;
     border: 1px solid #e9e9e9;
   }
-}
-.prev-date {
-  /* .prev-date__date */
-
-  &__date {
-  }
-}
-.next-date {
 }
 
 hr {

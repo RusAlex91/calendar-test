@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 <template>
   <div class="custom-select" :tabindex="tabindex" @blur="open = false">
     <div class="selected" :class="{ open: open }" @click="open = !open">
@@ -45,11 +44,7 @@ export default {
   data () {
     return {
       image: null,
-      selected: this.default
-        ? this.default
-        : this.options.length > 0 // eslint-disable-next-line indent
-        ? this.options[0] // eslint-disable-next-line indent
-        : null,
+      selected: this.default,
       open: false,
       employeeTrips: null
     }
@@ -141,9 +136,6 @@ export default {
 
 .custom-select .items div img {
   margin-right: 1rem;
-}
-
-.custom-select .items div img {
 }
 
 .custom-select .items div:hover {
