@@ -1,19 +1,24 @@
 <template>
-  <div class="day" :class="{ today: currentDay, weekend: todayWeekend }">
-    <span class="day_number">{{ index }}</span>
-
+  <div
+    class="day"
+    :class="{ today: currentDay, weekend: dayInfo.weekend }"
+    @click="this.getColors"
+  >
+    <span class="day__number" v-if="prevDate && !nextDate">{{ index }}</span>
+    <span class="day__number" v-if="nextDate && !prevDate">{{ index }}</span>
+    <span class="day__number">{{ dayInfo.day }}</span>
     <span
-      v-if="todayTrip && !todayWeekend"
-      :class="{ tripBadge: trip }"
+      v-if="dayInfo.trip && !dayInfo.weekend"
+      :class="{ tripBadge: dayInfo.trip }"
       class="day__trip-name"
-      >Екатеринбург</span
+      >{{ dayInfo.location }}</span
     >
     <span
-      v-if="todayWeekend && !todayHoliday"
-      :class="{ weekendBadge: todayWeekend }"
+      v-if="dayInfo.weekend && !dayInfo.holidays"
+      :class="{ weekendBadge: dayInfo.weekend }"
       >Выходной</span
     >
-    <span v-if="todayHoliday" :class="{ holidayBadge: todayHoliday }"
+    <span v-if="dayInfo.holidays" :class="{ holidayBadge: dayInfo.holidays }"
       >Праздник</span
     >
   </div>
@@ -24,7 +29,7 @@ export default {
   props: {
     index: {
       type: Number,
-      required: true,
+      required: false,
       default: null
     },
     day: {
@@ -37,7 +42,6 @@ export default {
       required: false,
       default: Array
     },
-
     holiday: {
       type: Array,
       required: false,
@@ -46,40 +50,66 @@ export default {
     trip: {
       type: Array,
       default: Array
+    },
+    dayInfo: {
+      type: Object,
+      default () {
+        return {
+          day: null,
+          weekend: false,
+          trip: false,
+          location: ''
+        }
+      }
+    },
+    prevDate: {
+      type: Boolean,
+      default: false
+    },
+    nextDate: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
       currentDay: null,
       weekends: this.weekend,
-      todayWeekend: false,
-      todayHoliday: false,
-      todayTrip: false
+
+      locationColors: null
     }
   },
   methods: {
     isWeekend () {
-      this.weekend.forEach(el => {
-        if (el === this.index) {
-          this.todayWeekend = true
-        }
-      })
+      // this.weekend.forEach(el => {
+      //   if (el === this.index) {
+      //     this.todayWeekend = true
+      //   }
+      // })
     },
     isHoliday () {
-      this.holiday.forEach(el => {
-        if (el === this.index) {
-          this.todayHoliday = true
-        }
-      })
+      // this.holiday.forEach(el => {
+      //   if (el === this.index) {
+      //     this.todayHoliday = true
+      //   }
+      // })
     },
-    isTrip () {
-      this.trip.forEach(el => {
-        if (el === this.index) {
-          this.todayTrip = true
-        }
-      })
+    getColors () {
+      fetch(
+        'https://my-json-server.typicode.com/RusAlex91/calendar-test/locationColors'
+      )
+        .then(response => response.json())
+        .then(data =>
+          Object.entries(data).forEach(([key, value]) => {
+            debugger
+            if (this.dayInfo.location === key) {
+              console.log(value)
+            }
+          })
+        )
     }
   },
+  created () {},
   mounted () {
     if (this.day === this.index) {
       this.currentDay = true
@@ -95,8 +125,8 @@ export default {
     this.todayTrip = false
     this.isWeekend()
     this.isHoliday()
-    this.isTrip()
-  }
+  },
+  updated () {}
 }
 </script>
 
@@ -110,7 +140,7 @@ export default {
   width: 9rem;
   height: 12rem;
   border: 1px solid turquoise;
-  &_number {
+  &__number {
     font-size: 1.6rem;
     margin: 7px;
   }
