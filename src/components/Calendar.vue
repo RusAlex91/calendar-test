@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar" @click="todayDate()">
+  <div class="calendar">
     <div class="calendar__navigation">
       <h2 ref="date" class="calendar__month-year">Июнь 2021</h2>
       <div class="calendar-controls">
