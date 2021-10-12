@@ -245,7 +245,6 @@ export default {
   },
   updated () {
     this.holidayData = this.holidaysData
-    this.tripData = this.tripsData
   },
   watch: {
     tripsData: function () {
