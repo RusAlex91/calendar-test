@@ -1,8 +1,7 @@
 <template>
   <div class="employees-list">
     <h3 class="employees-list__title">Сотрудник</h3>
-    <employee-select @input="change" :options="this.option"> </employee-select>
-    {{ datadata }}
+    <employee-select @input="change" :options="employeeData"> </employee-select>
   </div>
 </template>
 
@@ -12,26 +11,21 @@ export default {
   components: {
     EmployeeSelect
   },
-  data () {
-    return {
-      datadata: null,
-      option: {
-        1: {
-          option: 'Лозх',
-          images: 'https://via.placeholder.com/32x32/f00'
-        },
-        2: {
-          option: 'Дыа',
-          images: 'https://via.placeholder.com/32x32/#990'
-        }
-      }
+  props: {
+    employeeData: {
+      type: Array,
+      requiered: true
     }
+  },
+  data () {
+    return {}
   },
   methods: {
     change (data) {
-      this.datadata = data
+      this.$emit('trips', data)
     }
-  }
+  },
+  mounted () {}
 }
 </script>
 

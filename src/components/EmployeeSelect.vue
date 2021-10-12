@@ -10,14 +10,15 @@
         v-for="(option, i) in options"
         :key="i"
         @click="
-          ;(selected = option.option),
+          ;(selected = option.firstName + ' ' + option.lastName),
+            (employeeTrips = option.trips),
             (open = false),
-            $emit('input', option.option),
-            (image = option.images)
+            $emit('input', option.trips),
+            (image = option.image)
         "
       >
-        <img class="select-img" :src="option.images" alt="" />
-        {{ option.option }}
+        <img class="select-img" :src="option.image" alt="" />
+        {{ option.firstName + ' ' + option.lastName }}
       </div>
     </div>
   </div>
@@ -27,7 +28,7 @@
 export default {
   props: {
     options: {
-      type: Object,
+      type: Array,
       required: true
     },
     default: {
@@ -49,12 +50,11 @@ export default {
         : this.options.length > 0 // eslint-disable-next-line indent
         ? this.options[0] // eslint-disable-next-line indent
         : null,
-      open: false
+      open: false,
+      employeeTrips: null
     }
   },
-  mounted () {
-    this.$emit('input', this.selected)
-  }
+  methods: {}
 }
 </script>
 

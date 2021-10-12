@@ -1,19 +1,43 @@
 <template>
   <div class="employee-details">
     <div class="employee-details__trips">
-      <span class="employee-details__trips-number">4</span>
+      <span class="employee-details__trips-number">{{ tripCounter }}</span>
       <span class="employee-details__text">поездки</span>
     </div>
 
     <div class="employee-details__days">
-      <span class="employee-details__days-in-trips">9</span>
+      <span class="employee-details__days-in-trips">{{ tripDays }}</span>
       <span class="employee-details__text">дней командировки</span>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    tripsCounter: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    tripsDays: {
+      type: Number,
+      required: false,
+      default: 0
+    }
+  },
+  data () {
+    return {
+      tripCounter: 0,
+      tripDays: 0
+    }
+  },
+
+  updated () {
+    this.tripCounter = this.tripsCounter
+    this.tripDays = this.tripsDays
+  }
+}
 </script>
 
 <style scoped lang="scss">
