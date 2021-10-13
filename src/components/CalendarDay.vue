@@ -1,7 +1,11 @@
 <template>
   <div
     class="day"
-    :class="{ today: currentDay, weekend: dayInfo.weekend }"
+    :class="{
+      prevDate: prevDate,
+      nextDate: nextDate,
+      weekend: dayInfo.weekend
+    }"
     @click="this.getColors"
   >
     <span class="day__number" v-if="prevDate && !nextDate">{{ index }}</span>
@@ -136,21 +140,8 @@ export default {
   background: #fcfcfc;
 }
 
-.weekendBadge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: auto;
-  margin-bottom: 1rem;
-  margin-right: 1rem;
-  font-size: 14px;
-  font-weight: 400;
-  width: 7.2rem;
-  height: 2.3rem;
-  background: #97b2c4;
-  border-radius: 5px;
-}
-
+.weekendBadge,
+.holidayBadge,
 .tripBadge {
   display: flex;
   align-items: center;
@@ -158,27 +149,18 @@ export default {
   margin-top: auto;
   margin-bottom: 1rem;
   margin-right: 1rem;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 2rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  background: #97b2c4;
-  border-radius: 5px;
-}
-
-.holidayBadge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: auto;
-  margin-bottom: 1rem;
-  margin-right: 1rem;
   font-size: 14px;
   font-weight: 400;
-  width: 7.2rem;
   height: 2.3rem;
   background: #97b2c4;
   border-radius: 5px;
+  line-height: 2rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.nextDate,
+.prevDate {
+  color: rgba(0, 0, 0, 0.5);
 }
 </style>

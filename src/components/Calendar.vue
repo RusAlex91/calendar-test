@@ -132,8 +132,7 @@ export default {
       const date = this.date
 
       date.setDate(1)
-      // const calendarDays = {}
-      // const month = date.getMonth()
+
       this.daysInMonth = new Date(
         date.getFullYear(),
         date.getMonth() + 1,
@@ -166,6 +165,7 @@ export default {
         'Ноябрь',
         'Декабрь'
       ]
+      // month and year
       this.$refs.date.innerText = `${
         months[date.getMonth()]
       } ${date.getFullYear()}`
@@ -177,19 +177,21 @@ export default {
         const temp = prevLastDay - x + 1
         this.prevDates.push(temp)
       }
+
       this.nextDates = []
       const nextDays = 7 - lastDayIndex
+
       for (let o = 1; o <= nextDays; o++) {
         const temp = o
         this.nextDates.push(temp)
       }
+
       // Сегоднящний день, для отображения на календаре (не доделано)
       this.currentDay = new Date().getDate()
 
       const month = this.date.getMonth() + 1
       var current = new Date(this.date.getFullYear(), month - 1, 1)
       const objDay = {}
-      // as long as our date is in the requested month
 
       const daysArr = [...Array(this.daysInMonth).keys()]
 
@@ -225,8 +227,6 @@ export default {
       }
       let dd = 0
       while (current.getMonth() === month - 1) {
-        // saturday or sunday?
-
         if (current.getDay() === 0 || current.getDay() === 6) {
           this.weekends.push(current.getDate())
           objDay[dd].weekend = true
