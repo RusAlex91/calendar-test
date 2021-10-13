@@ -130,7 +130,6 @@ export default {
     margin: 7px;
   }
 
-  /* .day__trip-name */
 }
 .today {
   background: rgba(255, 99, 71, 0.295);
